@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.cwi.marvelapp.data.model.Character
 import br.com.cwi.marvelapp.databinding.CharactersFragmentBinding
-import br.com.cwi.marvelapp.presentation.extension.visibleOrGone
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -47,9 +46,13 @@ class CharactersFragment : Fragment() {
     private fun setUpViewModel() {
         viewModel.fetchCharacters()
 
-        viewModel.charactersLiveData.observe(viewLifecycleOwner) { onLoadCharacterList(it) }
+        viewModel.characters.observe(viewLifecycleOwner) { onLoadCharacterList(it) }
 
         viewModel.loading.observe(viewLifecycleOwner) { toggleViewFlipper(SHOW_LOADING) }
+
+        viewModel.loadingSearch.observe(viewLifecycleOwner) { toggleViewFlipperSearch(SHOW_LOADING) }
+
+        viewModel.emptyResult.observe(viewLifecycleOwner) { toggleViewFlipperSearch(SHOW_ERROR) }
 
         viewModel.error.observe(viewLifecycleOwner) {
             toggleViewFlipper(SHOW_ERROR)
@@ -58,6 +61,7 @@ class CharactersFragment : Fragment() {
     }
 
     private fun setUpSwipeRefresh() {
+        binding.titSearch.text = null
         binding.srlCharacters.setOnRefreshListener { viewModel.refreshCharacters() }
     }
 
@@ -69,8 +73,8 @@ class CharactersFragment : Fragment() {
 
     private fun onLoadCharacterList(list: List<Character>) {
         with(binding) {
-            progressBar.visibleOrGone(false)
             toggleViewFlipper(SHOW_CONTENT)
+            toggleViewFlipperSearch(SHOW_CONTENT)
             adapter.addItems(list)
             srlCharacters.isRefreshing = false
         }
@@ -99,7 +103,6 @@ class CharactersFragment : Fragment() {
 
                         if (lastItemListPosition == lastItemPosition) {
                             viewModel.fetchCharacters(nextPage = true)
-                            binding.progressBar.visibleOrGone(true)
                         }
                     }
                 }
@@ -111,6 +114,10 @@ class CharactersFragment : Fragment() {
 
     private fun toggleViewFlipper(viewPosition: Int) {
         binding.vfCharacter.displayedChild = viewPosition
+
+    }
+    private fun toggleViewFlipperSearch(viewPosition: Int) {
+        binding.vfCharacterSearch.displayedChild = viewPosition
 
     }
 }

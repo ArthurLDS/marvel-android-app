@@ -98,4 +98,6 @@
     </string>
     <string name="action_settings">Settings</string>
     <string name="txt_search">Pesquisar</string>
+    <string name="txt_empty_result">Nenhum resultado obtido</string>
+    <string name="txt_empty_result_subtitle">Busque novamente com outros termos</string>
 </resources>
