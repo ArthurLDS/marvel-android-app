@@ -3,7 +3,22 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../../../layout/custom_preview.xml" value="0.32407407407407407" />
+        <entry key="app/src/main/res/drawable/ic_error_outline.xml" value="0.1185" />
+        <entry key="app/src/main/res/drawable/tab_color.xml" value="0.2565" />
+        <entry key="app/src/main/res/layout-w936dp/content_scrolling.xml" value="0.14288446824789594" />
+        <entry key="app/src/main/res/layout/activity_character_detail.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_characters.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_characters_nav_host.xml" value="0.25317028985507245" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.31567028985507245" />
+        <entry key="app/src/main/res/layout/characters_fragment.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/content_scrolling.xml" value="0.182370820668693" />
+        <entry key="app/src/main/res/layout/favorites_fragment.xml" value="0.4036458333333333" />
+        <entry key="app/src/main/res/layout/item_character.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/view_error.xml" value="0.1833839918946302" />
+        <entry key="app/src/main/res/layout/view_loading.xml" value="0.1833839918946302" />
+        <entry key="app/src/main/res/menu/menu_bottom_navigation.xml" value="0.3890625" />
+        <entry key="app/src/main/res/menu/menu_character_detail.xml" value="0.3890625" />
       </map>
     </option>
   </component>

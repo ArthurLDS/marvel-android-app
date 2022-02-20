@@ -6,11 +6,12 @@ import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 
 data class CharactersResponse(
-    val data: Data
+    val data: CharacterDataResponse
 )
 
-data class Data(
-    val results: List<Character>
+data class CharacterDataResponse(
+    val results: List<Character>,
+    val total: Int
 )
 
 @Parcelize
