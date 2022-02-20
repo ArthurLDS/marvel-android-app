@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/bottom_characters"
-        android:name="br.com.cwi.marvelapp.presentation.character.CharactersFragment"
+        android:name="br.com.cwi.marvelapp.presentation.feature.characters.CharactersFragment"
         android:label="@string/txt_characters"
         tools:layout="@layout/characters_fragment" >
         <action
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/bottom_favorites"
-        android:name="br.com.cwi.marvelapp.presentation.favorite.FavoritesFragment"
+        android:name="br.com.cwi.marvelapp.presentation.feature.favorite.FavoritesFragment"
         android:label="@string/txt_favorites"
         tools:layout="@layout/favorites_fragment" >
         <action
@@ -27,7 +27,7 @@
 
     <activity
         android:id="@+id/charactersNavHostActivity"
-        android:name="br.com.cwi.marvelapp.presentation.CharactersNavHostActivity"
+        android:name="br.com.cwi.marvelapp.presentation.feature.characters.CharactersNavHostActivity"
         android:label="CharactersNavHostActivity" />
 
 </navigation>

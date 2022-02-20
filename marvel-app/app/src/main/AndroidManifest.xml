@@ -14,12 +14,12 @@
         android:theme="@style/Theme.MarvelApp"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".presentation.CharacterDetailActivity"
+            android:name=".presentation.feature.characterdetail.CharacterDetailActivity"
             android:exported="false"
             android:label="@string/title_activity_character_detail"
             android:theme="@style/Theme.MarvelApp.NoActionBar" />
         <activity
-            android:name=".presentation.CharactersNavHostActivity"
+            android:name=".presentation.feature.characters.CharactersNavHostActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

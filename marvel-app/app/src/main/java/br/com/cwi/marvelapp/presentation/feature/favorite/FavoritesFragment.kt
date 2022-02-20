@@ -1,4 +1,4 @@
-package br.com.cwi.marvelapp.presentation.favorite
+package br.com.cwi.marvelapp.presentation.feature.favorite
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle

@@ -1,5 +1,6 @@
-package br.com.cwi.marvelapp.presentation.character
+package br.com.cwi.marvelapp.presentation.feature.characters
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,8 +9,10 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import br.com.cwi.marvelapp.data.model.Character
 import br.com.cwi.marvelapp.databinding.CharactersFragmentBinding
+import br.com.cwi.marvelapp.domain.model.CharacterItem
+import br.com.cwi.marvelapp.presentation.feature.characterdetail.CharacterDetailActivity
+import br.com.cwi.marvelapp.presentation.feature.characterdetail.EXTRA_CHARACTER_ID
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -23,7 +26,7 @@ class CharactersFragment : Fragment() {
 
     private lateinit var binding: CharactersFragmentBinding
 
-    private val adapter = CharacterAdapter()
+    private val adapter = CharacterAdapter { onClickCharacter(it) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,8 +53,6 @@ class CharactersFragment : Fragment() {
 
         viewModel.loading.observe(viewLifecycleOwner) { toggleViewFlipper(SHOW_LOADING) }
 
-        viewModel.loadingSearch.observe(viewLifecycleOwner) { toggleViewFlipperSearch(SHOW_LOADING) }
-
         viewModel.emptyResult.observe(viewLifecycleOwner) { toggleViewFlipperSearch(SHOW_ERROR) }
 
         viewModel.error.observe(viewLifecycleOwner) {
@@ -61,8 +62,10 @@ class CharactersFragment : Fragment() {
     }
 
     private fun setUpSwipeRefresh() {
-        binding.titSearch.text = null
-        binding.srlCharacters.setOnRefreshListener { viewModel.refreshCharacters() }
+        binding.srlCharacters.setOnRefreshListener {
+            binding.titSearch.text = null
+            viewModel.refreshCharacters()
+        }
     }
 
     private fun setUpSearchField() {
@@ -71,13 +74,21 @@ class CharactersFragment : Fragment() {
         }
     }
 
-    private fun onLoadCharacterList(list: List<Character>) {
+    private fun onLoadCharacterList(list: List<CharacterItem>) {
         with(binding) {
             toggleViewFlipper(SHOW_CONTENT)
             toggleViewFlipperSearch(SHOW_CONTENT)
             adapter.addItems(list)
             srlCharacters.isRefreshing = false
         }
+    }
+
+    private fun onClickCharacter(id: Long) {
+        startActivity(
+            Intent(context, CharacterDetailActivity::class.java).apply {
+                putExtra(EXTRA_CHARACTER_ID, id)
+            }
+        )
     }
 
     private fun setUpRecyclerView() {
@@ -116,6 +127,7 @@ class CharactersFragment : Fragment() {
         binding.vfCharacter.displayedChild = viewPosition
 
     }
+
     private fun toggleViewFlipperSearch(viewPosition: Int) {
         binding.vfCharacterSearch.displayedChild = viewPosition
 
