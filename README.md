@@ -21,7 +21,7 @@
 - Uso de boas práticas do Architecture Components do Android em geral.
 - Implementação de injeção de dependências usando `Koin`.
 - Código escrito buscando manter as melhores práticas de Clean Code.
-- Cobertura de teste unitário nas View Models e Repositorios, usando `Mockk`.
+- Cobertura de teste unitário nas View Models e Repositorios, usando `Mockk` e `JUnit`.
 
 
 ## Arquitetura e Padrões de projeto
