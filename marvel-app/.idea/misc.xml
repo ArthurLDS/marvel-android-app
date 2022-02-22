@@ -11,6 +11,7 @@
         <entry key="app/src/main/res/drawable/ic_grid.xml" value="0.1545" />
         <entry key="app/src/main/res/drawable/ic_grid_icon.xml" value="0.355" />
         <entry key="app/src/main/res/drawable/ic_list_border_icon.xml" value="0.1965" />
+        <entry key="app/src/main/res/drawable/splash_bg.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/tab_color.xml" value="0.2565" />
         <entry key="app/src/main/res/layout-w1240dp/content_scrolling.xml" value="0.24230254350736277" />
         <entry key="app/src/main/res/layout-w936dp/content_scrolling.xml" value="0.14288446824789594" />

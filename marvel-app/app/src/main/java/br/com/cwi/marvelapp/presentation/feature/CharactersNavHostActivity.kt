@@ -19,6 +19,7 @@ class CharactersNavHostActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.Theme_MarvelApp)
         binding = ActivityCharactersNavHostBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
