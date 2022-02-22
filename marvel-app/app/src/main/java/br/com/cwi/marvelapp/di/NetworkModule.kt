@@ -37,13 +37,15 @@ fun createRetrofit(okHttpClient: OkHttpClient, url: String): Retrofit {
         .client(okHttpClient)
         .addConverterFactory(
             MoshiConverterFactory.create(
-                Moshi.Builder()
-                    .addLast(KotlinJsonAdapterFactory())
-                    .build()
+                getMoshi()
             )
         )
         .build()
 }
+
+private fun getMoshi(): Moshi = Moshi.Builder()
+    .addLast(KotlinJsonAdapterFactory())
+    .build()
 
 fun createParametersDefault(chain: Interceptor.Chain): Response {
     val timeStamp = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())
@@ -51,7 +53,10 @@ fun createParametersDefault(chain: Interceptor.Chain): Response {
     val builder = request.url.newBuilder()
 
     builder.addQueryParameter("apikey", BuildConfig.API_PUBLIC)
-        .addQueryParameter("hash", HashGenerate.generate(timeStamp, BuildConfig.API_PRIVATE, BuildConfig.API_PUBLIC))
+        .addQueryParameter(
+            "hash",
+            HashGenerate.generate(timeStamp, BuildConfig.API_PRIVATE, BuildConfig.API_PUBLIC)
+        )
         .addQueryParameter("ts", timeStamp.toString())
 
     request = request.newBuilder().url(builder.build()).build()

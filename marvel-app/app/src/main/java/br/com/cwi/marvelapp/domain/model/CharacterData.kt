@@ -4,4 +4,3 @@ data class CharacterData(
     val results: List<CharacterItem>,
     val total: Int
 )
-

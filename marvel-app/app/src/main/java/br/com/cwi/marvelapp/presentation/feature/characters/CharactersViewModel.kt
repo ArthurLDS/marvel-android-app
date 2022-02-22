@@ -2,9 +2,8 @@ package br.com.cwi.marvelapp.presentation.feature.characters
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import br.com.cwi.marvelapp.domain.model.CharacterItem
-import br.com.cwi.marvelapp.data.model.CharacterDataResponse
 import br.com.cwi.marvelapp.domain.model.CharacterData
+import br.com.cwi.marvelapp.domain.model.CharacterItem
 import br.com.cwi.marvelapp.domain.repository.CharacterRepository
 import br.com.cwi.marvelapp.presentation.base.BaseViewModel
 
@@ -25,10 +24,8 @@ class CharactersViewModel(private val repository: CharacterRepository) : BaseVie
 
     fun fetchCharacters(nextPage : Boolean = false) {
         launch(true) {
-            if (nextPage)
-                currentPage += TOTAL_ITEMS_PER_PAGE
-            else
-                _loading.postValue(true)
+            if (nextPage) currentPage += TOTAL_ITEMS_PER_PAGE
+            else _loading.postValue(true)
 
             val response: CharacterData =
                 repository.getCharacters(TOTAL_ITEMS_PER_PAGE, currentPage, termSearch)
@@ -68,6 +65,14 @@ class CharactersViewModel(private val repository: CharacterRepository) : BaseVie
                 repository.getCharacters(TOTAL_ITEMS_PER_PAGE, currentPage, null)
             _characters.postValue(response.results)
         }
+    }
+
+    fun setFavorite(character: CharacterItem) = with (character){
+        isFavorite = isFavorite.not()
+        if (isFavorite)
+            repository.add(character)
+        else
+            repository.delete(character)
     }
 
 }

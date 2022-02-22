@@ -1,41 +1,39 @@
-package br.com.cwi.marvelapp.presentation.feature.characters
+package br.com.cwi.marvelapp.presentation.feature.favorite
 
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.RecyclerView.Adapter
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import androidx.recyclerview.widget.RecyclerView
 import br.com.cwi.marvelapp.R
 import br.com.cwi.marvelapp.databinding.ItemCharacterBinding
 import br.com.cwi.marvelapp.domain.model.CharacterItem
 import br.com.cwi.marvelapp.presentation.extension.inflate
 import br.com.cwi.marvelapp.presentation.extension.loadImage
-import br.com.cwi.marvelapp.presentation.feature.characters.CharacterAdapter.CharacterViewHolder
+import br.com.cwi.marvelapp.presentation.feature.favorite.FavoritesAdapter.FavoritesViewHolder
 
-class CharacterAdapter(
+class FavoritesAdapter(
     private var list: List<CharacterItem> = listOf(),
-    private val onClickItem: (Long) -> Unit,
     private val onClickFavorite: (CharacterItem) -> Unit
-) : Adapter<CharacterViewHolder>() {
+) : RecyclerView.Adapter<FavoritesViewHolder>() {
 
-    fun updateItems(newItems: List<CharacterItem>) {
+    fun addItems(newItems: List<CharacterItem>) {
         list = newItems
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder {
-        return CharacterViewHolder(parent.inflate(R.layout.item_character, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritesViewHolder {
+        return FavoritesViewHolder(parent.inflate(R.layout.item_character, false))
     }
 
-    override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: FavoritesViewHolder, position: Int) {
         val item = list[position]
         holder.bind(item)
     }
 
     override fun getItemCount() = list.size
 
-    inner class CharacterViewHolder(item: View) : ViewHolder(item) {
+    inner class FavoritesViewHolder(item: View) : RecyclerView.ViewHolder(item) {
 
         private val ivCharacter = ItemCharacterBinding.bind(item).ivCharacter
         private val tvCharacterName = ItemCharacterBinding.bind(item).tvCharacterName
@@ -45,17 +43,13 @@ class CharacterAdapter(
             ivCharacter.loadImage(getUrlImage())
             tvCharacterName.text = name
 
-            itemView.setOnClickListener { onClickItem(id) }
-
             with(ivFavorite) {
                 setOnClickListener {
                     onClickFavorite(character)
                     notifyDataSetChanged()
-                    setImageDrawable(getIcon(character.isFavorite.not()))
                 }
                 setImageDrawable(getIcon(character.isFavorite))
             }
-
         }
 
         private fun getIcon(isFavorite: Boolean) : Drawable? {
@@ -64,4 +58,3 @@ class CharacterAdapter(
         }
     }
 }
-

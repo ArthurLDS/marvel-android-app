@@ -12,3 +12,11 @@ fun ViewGroup.inflate(@LayoutRes resource: Int, attachToRoot: Boolean = false): 
 fun View.visibleOrGone(isVisible: Boolean) {
     visibility = if(isVisible) View.VISIBLE else View.GONE
 }
+
+fun View.gone() {
+    visibility = View.GONE
+}
+
+fun View.visible() {
+    visibility = View.VISIBLE
+}

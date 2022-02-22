@@ -8,4 +8,6 @@ data class CharacterItem(
     val series: Series? = null,
     val thumbnail: Thumbnail? = null,
     val comics: Comics? = null
-)
+) {
+    fun getUrlImage() = "${thumbnail?.path}.${thumbnail?.extension}"
+}

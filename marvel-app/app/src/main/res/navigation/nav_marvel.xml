@@ -27,7 +27,7 @@
 
     <activity
         android:id="@+id/charactersNavHostActivity"
-        android:name="br.com.cwi.marvelapp.presentation.feature.characters.CharactersNavHostActivity"
+        android:name="br.com.cwi.marvelapp.presentation.feature.CharactersNavHostActivity"
         android:label="CharactersNavHostActivity" />
 
 </navigation>

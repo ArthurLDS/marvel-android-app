@@ -1,6 +1,6 @@
 package br.com.cwi.marvelapp.data.mapper
 
-import br.com.cwi.marvelapp.data.model.CharacterDataResponse
+import br.com.cwi.marvelapp.data.model.remote.CharacterDataResponse
 import br.com.cwi.marvelapp.domain.model.CharacterData
 
 class CharacterMapper : DomainMapper<CharacterDataResponse, CharacterData> {

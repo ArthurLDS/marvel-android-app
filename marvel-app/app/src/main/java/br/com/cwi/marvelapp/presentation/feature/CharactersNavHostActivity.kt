@@ -1,4 +1,4 @@
-package br.com.cwi.marvelapp.presentation.feature.characters
+package br.com.cwi.marvelapp.presentation.feature
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

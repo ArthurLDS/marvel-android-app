@@ -1,6 +1,6 @@
 package br.com.cwi.marvelapp.data.mapper
 
-import br.com.cwi.marvelapp.data.model.ComicsResponse
+import br.com.cwi.marvelapp.data.model.remote.ComicsResponse
 import br.com.cwi.marvelapp.domain.model.Comics
 
 class ComicsMapper : DomainMapper<ComicsResponse, Comics> {

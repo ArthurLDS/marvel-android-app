@@ -15,7 +15,6 @@ import br.com.cwi.marvelapp.presentation.feature.characterdetail.CharacterDetail
 import br.com.cwi.marvelapp.presentation.feature.characterdetail.EXTRA_CHARACTER_ID
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-
 const val SHOW_CONTENT = 0
 const val SHOW_LOADING = 1
 const val SHOW_ERROR = 2
@@ -26,7 +25,10 @@ class CharactersFragment : Fragment() {
 
     private lateinit var binding: CharactersFragmentBinding
 
-    private val adapter = CharacterAdapter { onClickCharacter(it) }
+    private val adapter = CharacterAdapter(
+        onClickItem = ::onClickCharacter,
+        onClickFavorite = ::onClickFavorite
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -63,13 +65,13 @@ class CharactersFragment : Fragment() {
 
     private fun setUpSwipeRefresh() {
         binding.srlCharacters.setOnRefreshListener {
-            binding.titSearch.text = null
+            binding.viewSearchHeader.titSearch.text = null
             viewModel.refreshCharacters()
         }
     }
 
     private fun setUpSearchField() {
-        binding.titSearch.doOnTextChanged { text, _, _, _ ->
+        binding.viewSearchHeader.titSearch.doOnTextChanged { text, _, _, _ ->
             viewModel.searchCharacters(text.toString())
         }
     }
@@ -78,7 +80,7 @@ class CharactersFragment : Fragment() {
         with(binding) {
             toggleViewFlipper(SHOW_CONTENT)
             toggleViewFlipperSearch(SHOW_CONTENT)
-            adapter.addItems(list)
+            adapter.updateItems(list)
             srlCharacters.isRefreshing = false
         }
     }
@@ -90,6 +92,8 @@ class CharactersFragment : Fragment() {
             }
         )
     }
+
+    private fun onClickFavorite(item: CharacterItem) { viewModel.setFavorite(item) }
 
     private fun setUpRecyclerView() {
         with(binding) {
@@ -125,7 +129,6 @@ class CharactersFragment : Fragment() {
 
     private fun toggleViewFlipper(viewPosition: Int) {
         binding.vfCharacter.displayedChild = viewPosition
-
     }
 
     private fun toggleViewFlipperSearch(viewPosition: Int) {

@@ -19,7 +19,7 @@
             android:label="@string/title_activity_character_detail"
             android:theme="@style/Theme.MarvelApp.NoActionBar" />
         <activity
-            android:name=".presentation.feature.characters.CharactersNavHostActivity"
+            android:name=".presentation.feature.CharactersNavHostActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
