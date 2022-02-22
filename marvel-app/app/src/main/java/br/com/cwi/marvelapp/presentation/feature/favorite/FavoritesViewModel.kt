@@ -18,12 +18,10 @@ class FavoritesViewModel(private val repository: CharacterRepository) : BaseView
         launch {
             val response = repository.getAll()
 
-            if (response.isNullOrEmpty()) {
+            if (response.isNullOrEmpty())
                 _emptyResult.postValue(true)
-            } else {
+            else
                 _favorites.postValue(response)
-
-            }
         }
     }
 

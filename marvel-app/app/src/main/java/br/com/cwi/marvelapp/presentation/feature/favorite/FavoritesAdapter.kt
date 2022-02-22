@@ -47,13 +47,15 @@ class FavoritesAdapter(
                 setOnClickListener {
                     onClickFavorite(character)
                     notifyDataSetChanged()
+                    setImageDrawable(getIcon(character.isFavorite.not()))
                 }
                 setImageDrawable(getIcon(character.isFavorite))
             }
         }
 
-        private fun getIcon(isFavorite: Boolean) : Drawable? {
-            val icon : Int = if (isFavorite) R.drawable.ic_favorite else R.drawable.ic_favorite_border
+        private fun getIcon(isFavorite: Boolean): Drawable? {
+            val icon: Int =
+                if (isFavorite) R.drawable.ic_favorite else R.drawable.ic_favorite_border
             return ContextCompat.getDrawable(itemView.context, icon)
         }
     }

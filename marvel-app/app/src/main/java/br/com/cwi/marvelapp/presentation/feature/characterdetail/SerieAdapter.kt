@@ -6,13 +6,12 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import br.com.cwi.marvelapp.R
 import br.com.cwi.marvelapp.databinding.ItemComicsBinding
-import br.com.cwi.marvelapp.domain.model.CharacterItem
 import br.com.cwi.marvelapp.domain.model.Item
 import br.com.cwi.marvelapp.presentation.extension.inflate
 import br.com.cwi.marvelapp.presentation.extension.loadImage
-import br.com.cwi.marvelapp.presentation.feature.characterdetail.ComicsAdapter.CharacterComicViewHolder
+import br.com.cwi.marvelapp.presentation.feature.characterdetail.SerieAdapter.CharacterComicViewHolder
 
-class ComicsAdapter(var list: List<Item> = listOf()): Adapter<CharacterComicViewHolder>() {
+class SerieAdapter(var list: List<Item> = listOf()): Adapter<CharacterComicViewHolder>() {
 
     fun updateItems(newItems: List<Item>) {
         list = newItems

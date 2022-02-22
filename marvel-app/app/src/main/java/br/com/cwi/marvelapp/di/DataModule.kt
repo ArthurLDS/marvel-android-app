@@ -11,10 +11,10 @@ import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
 
 val dataModule = module {
-    factory<CharacterRepository> { CharacterRepositoryImpl(get(), get(), get(), get(), get(), get()) }
+    factory<CharacterRepository> { CharacterRepositoryImpl(get(), get(), get(), get(), get()) }
     single { CharacterMapper() }
     single { CharacterItemMapper() }
     single { CharacterItemLocalMapper() }
     single { ItemMapper() }
-    single { MarvelDatabase.create(androidApplication()) }
+    single { MarvelDatabase.create(androidApplication()).getItemDao() }
 }

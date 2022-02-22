@@ -5,10 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import br.com.cwi.marvelapp.R
 import br.com.cwi.marvelapp.databinding.CharactersFragmentBinding
 import br.com.cwi.marvelapp.domain.model.CharacterItem
 import br.com.cwi.marvelapp.presentation.feature.characterdetail.CharacterDetailActivity
@@ -43,14 +46,13 @@ class CharactersFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setUpRecyclerView()
-        setUpViewModel()
         setUpSwipeRefresh()
         setUpSearchField()
+        setUpListButtons()
+        setUpViewModel()
     }
 
     private fun setUpViewModel() {
-        viewModel.fetchCharacters()
-
         viewModel.characters.observe(viewLifecycleOwner) { onLoadCharacterList(it) }
 
         viewModel.loading.observe(viewLifecycleOwner) { toggleViewFlipper(SHOW_LOADING) }
@@ -60,6 +62,19 @@ class CharactersFragment : Fragment() {
         viewModel.error.observe(viewLifecycleOwner) {
             toggleViewFlipper(SHOW_ERROR)
             binding.srlCharacters.isRefreshing = false
+        }
+
+        viewModel.fetchCharacters()
+    }
+
+    private fun setUpListButtons() {
+        viewModel.isGridList.observe(viewLifecycleOwner) { setUpButtonListIcon(it) }
+
+        binding.viewSearchHeader.btnGrid.setOnClickListener {
+            viewModel.setCharactersTypeList(true)
+        }
+        binding.viewSearchHeader.btnList.setOnClickListener {
+            viewModel.setCharactersTypeList(false)
         }
     }
 
@@ -93,11 +108,16 @@ class CharactersFragment : Fragment() {
         )
     }
 
-    private fun onClickFavorite(item: CharacterItem) { viewModel.setFavorite(item) }
+    private fun onClickFavorite(item: CharacterItem) {
+        viewModel.setFavorite(item)
+    }
 
-    private fun setUpRecyclerView() {
+    private fun setUpRecyclerView(isGridList: Boolean = true) {
         with(binding) {
-            val layoutManager = GridLayoutManager(context, 2)
+            val layoutManager = if (isGridList)
+                GridLayoutManager(context, 2)
+            else
+                LinearLayoutManager(context)
 
             rvCharacters.adapter = adapter
             rvCharacters.layoutManager = layoutManager
@@ -106,18 +126,37 @@ class CharactersFragment : Fragment() {
         }
     }
 
+    private fun setUpButtonListIcon(isGrid: Boolean){
+        context?.let {
+            setUpRecyclerView(isGrid)
+            binding.viewSearchHeader.btnGrid.setImageDrawable(
+                ContextCompat.getDrawable(
+                    it,
+                    if (isGrid) R.drawable.ic_grid
+                    else R.drawable.ic_grid_border
+                )
+            )
+            binding.viewSearchHeader.btnList.setImageDrawable(
+                ContextCompat.getDrawable(
+                    it,
+                    if (isGrid) R.drawable.ic_list_border
+                    else R.drawable.ic_list_icon
+                )
+            )
+        }
+    }
+
     private fun setupScrollListener() {
         val scrollListener: RecyclerView.OnScrollListener =
             object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     if (dy > 0) {
-                        val linearLayout = recyclerView.layoutManager as GridLayoutManager
-                        val lastItemListPosition =
-                            linearLayout.findLastCompletelyVisibleItemPosition()
+                        val layout = recyclerView.layoutManager as LinearLayoutManager
+                        val lastItemListPosition = layout.findLastCompletelyVisibleItemPosition()
                         val lastItemPosition = recyclerView.adapter?.itemCount?.minus(1)
 
                         if (lastItemListPosition == lastItemPosition) {
-                            viewModel.fetchCharacters(nextPage = true)
+                            viewModel.fetchCharactersWithPagination()
                         }
                     }
                 }

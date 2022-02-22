@@ -8,7 +8,7 @@ interface CharacterRepository {
 
     //Remote
     suspend fun getCharacters(limit: Int, offset: Int, term: String? = null): CharacterData
-    suspend fun getCharacterDetail(id: Long): CharacterItem
+    suspend fun getCharacterDetail(id: Long): CharacterItem?
     suspend fun getSeries(id: Long): List<Item>
     suspend fun getComics(id: Long): List<Item>
 

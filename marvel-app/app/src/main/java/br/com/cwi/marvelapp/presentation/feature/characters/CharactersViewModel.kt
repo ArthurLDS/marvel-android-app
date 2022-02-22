@@ -19,13 +19,24 @@ class CharactersViewModel(private val repository: CharacterRepository) : BaseVie
     private val _emptyResult: MutableLiveData<Boolean> = MutableLiveData()
     val emptyResult: LiveData<Boolean> = _emptyResult
 
-    private var currentPage = 0
-    private var termSearch : String? = null
+    private val _isGridList: MutableLiveData<Boolean> = MutableLiveData(true)
+    val isGridList: MutableLiveData<Boolean> = _isGridList
 
-    fun fetchCharacters(nextPage : Boolean = false) {
+    private var currentPage = 0
+    private var termSearch: String? = null
+
+    fun fetchCharacters() {
+        launch {
+            val response: CharacterData =
+                repository.getCharacters(TOTAL_ITEMS_PER_PAGE, currentPage, termSearch)
+
+            _characters.postValue(response.results)
+        }
+    }
+
+    fun fetchCharactersWithPagination() {
         launch(true) {
-            if (nextPage) currentPage += TOTAL_ITEMS_PER_PAGE
-            else _loading.postValue(true)
+            currentPage += TOTAL_ITEMS_PER_PAGE
 
             val response: CharacterData =
                 repository.getCharacters(TOTAL_ITEMS_PER_PAGE, currentPage, termSearch)
@@ -73,6 +84,11 @@ class CharactersViewModel(private val repository: CharacterRepository) : BaseVie
             repository.add(character)
         else
             repository.delete(character)
+    }
+
+    fun setCharactersTypeList(isGrid: Boolean) {
+        if (_isGridList.value != isGrid)
+            _isGridList.postValue(isGrid)
     }
 
 }

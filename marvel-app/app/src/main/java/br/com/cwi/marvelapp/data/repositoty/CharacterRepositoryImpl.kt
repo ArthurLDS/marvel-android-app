@@ -3,32 +3,25 @@ package br.com.cwi.marvelapp.data.repositoty
 import br.com.cwi.marvelapp.data.mapper.CharacterItemLocalMapper
 import br.com.cwi.marvelapp.data.mapper.CharacterItemMapper
 import br.com.cwi.marvelapp.data.mapper.CharacterMapper
-import br.com.cwi.marvelapp.data.mapper.ItemMapper
-import br.com.cwi.marvelapp.data.source.local.MarvelDatabase
+import br.com.cwi.marvelapp.data.source.local.CharacterDao
 import br.com.cwi.marvelapp.data.source.remote.MarvelApi
-import br.com.cwi.marvelapp.domain.model.CharacterData
 import br.com.cwi.marvelapp.domain.model.CharacterItem
-import br.com.cwi.marvelapp.domain.model.Comics
 import br.com.cwi.marvelapp.domain.model.Item
 import br.com.cwi.marvelapp.domain.repository.CharacterRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 
 class CharacterRepositoryImpl(
-    localDatabase: MarvelDatabase,
+    private val dao: CharacterDao,
     private val api: MarvelApi,
     private val mapperCharacterData: CharacterMapper,
     private val mapperCharacterItem: CharacterItemMapper,
-    private val mapperItemMapper: ItemMapper,
     private val mapperCharacterLocal: CharacterItemLocalMapper,
 ) : CharacterRepository {
 
-    private val dao = localDatabase.getItemDao()
-
     // Remote
-    override suspend fun getCharacters(limit: Int, offset: Int, term: String?): CharacterData {
-        return withContext(Dispatchers.IO) {
+    override suspend fun getCharacters(limit: Int, offset: Int, term: String?) =
+        withContext(Dispatchers.IO) {
             val characters =
                 mapperCharacterData.toDomain(api.getCharacters(limit, offset, term).data)
 
@@ -38,15 +31,17 @@ class CharacterRepositoryImpl(
             }
             characters
         }
-    }
+
 
     override suspend fun getCharacterDetail(id: Long) = withContext(Dispatchers.IO) {
-        val detail = async { api.getCharacterDetail(id) }
+        val detail = api.getCharacterDetail(id)
 
-        val character = mapperCharacterItem.toDomain(detail.await().data.results.first())
+        detail.data.results.firstOrNull()?.let {
+            val character = mapperCharacterItem.toDomain(it)
 
-        character.apply {
-            isFavorite = getCharacterById(id)?.isFavorite ?: false
+            character.apply {
+                isFavorite = getCharacterById(id)?.isFavorite ?: false
+            }
         }
     }
 

@@ -23,9 +23,9 @@ class CharacterDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCharacterDetailBinding
 
-    private val adapterComics = ComicsAdapter()
+    private val adapterComics = SerieAdapter()
 
-    private val adapterSeries = ComicsAdapter()
+    private val adapterSeries = SerieAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -2,14 +2,12 @@ package br.com.cwi.marvelapp.presentation.feature.characterdetail
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import br.com.cwi.marvelapp.domain.model.CharacterItem
 import br.com.cwi.marvelapp.domain.model.Item
 import br.com.cwi.marvelapp.domain.repository.CharacterRepository
 import br.com.cwi.marvelapp.presentation.base.BaseViewModel
-import kotlinx.coroutines.async
 
-class CharacterDetailViewModel(private val repository: CharacterRepository): BaseViewModel() {
+class CharacterDetailViewModel(private val repository: CharacterRepository) : BaseViewModel() {
 
     private val _data: MutableLiveData<CharacterItem> = MutableLiveData()
     val data: LiveData<CharacterItem> = _data
@@ -28,14 +26,13 @@ class CharacterDetailViewModel(private val repository: CharacterRepository): Bas
 
     fun fetchComics(id: Long) {
         launch {
-            val response = repository.getComics(id)
-            _comics.postValue(response)
+            _comics.postValue(repository.getComics(id))
         }
     }
+
     fun fetchSeries(id: Long) {
         launch {
-            val response = repository.getSeries(id)
-            _series.postValue(response)
+            _series.postValue(repository.getSeries(id))
         }
     }
 
@@ -46,11 +43,5 @@ class CharacterDetailViewModel(private val repository: CharacterRepository): Bas
         else
             repository.delete(character)
     }
-
-    /*sealed class COmic {
-        object ServiceUnavailable : OfferFlowEvent()
-        object ShowFormScreen : OfferFlowEvent()
-    }*/
-
 
 }

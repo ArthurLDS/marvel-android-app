@@ -26,10 +26,10 @@
                 layout="@layout/view_search_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/vf_character_search"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/vf_character_search" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ViewFlipper
                 android:id="@+id/vf_character_search"
@@ -49,6 +49,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:clipToPadding="false"
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:padding="8dp"
                         app:layout_constraintBottom_toTopOf="@+id/progress_bar"
                         app:layout_constraintEnd_toEndOf="parent"
