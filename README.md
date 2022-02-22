@@ -11,7 +11,8 @@
 
 - Listagem de personagens, com lista infinita, barra de buscas, pull-to-refresh e seleção de tipo da listagem.
 - Listagem de detalhes do personagem, junto com seus Comics e Series.
-- Armazenamento local e gerenciamento de personagens favoritos
+- Armazenamento local e gerenciamento de personagens favoritos.
+- Tratamento de erros.
 
 ## Features Tecnicas
 - Armazenamento de dados locais usando `Room`.
