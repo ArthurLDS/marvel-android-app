@@ -13,8 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_favorites"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
@@ -22,8 +21,28 @@
             app:layout_constraintBottom_toTopOf="@+id/progress_bar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/til_search"
-            tools:listitem="@layout/item_character" />
+            app:layout_constraintTop_toBottomOf="@+id/til_search">
+
+            <androidx.compose.ui.platform.ComposeView
+                android:id="@+id/my_composable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_favorites"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:padding="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/my_composable"
+                tools:listitem="@layout/item_character" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <include
             android:id="@+id/view_loading"

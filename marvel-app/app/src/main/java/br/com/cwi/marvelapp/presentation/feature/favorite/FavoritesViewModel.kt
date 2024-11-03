@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import br.com.cwi.marvelapp.domain.model.CharacterItem
 import br.com.cwi.marvelapp.domain.repository.CharacterRepository
 import br.com.cwi.marvelapp.presentation.base.BaseViewModel
+import kotlinx.coroutines.delay
 
 class FavoritesViewModel(private val repository: CharacterRepository) : BaseViewModel() {
 
@@ -17,19 +18,31 @@ class FavoritesViewModel(private val repository: CharacterRepository) : BaseView
     fun fetchFavorites() {
         launch {
             val response = repository.getAll()
+            _loading.postValue(true)
+            delay(2000)
 
-            if (response.isNullOrEmpty())
+            if (response.isEmpty()){
                 _emptyResult.postValue(true)
-            else
+                _loading.postValue(false)
+            }
+            else {
                 _favorites.postValue(response)
+                _loading.postValue(false)
+
+            }
         }
     }
 
     fun setFavorite(character: CharacterItem) = with(character) {
         isFavorite = isFavorite.not()
-        if (isFavorite)
-            repository.add(character)
-        else
-            repository.delete(character)
+
+        try {
+            if (isFavorite)
+                repository.add(character)
+            else
+                repository.delete(character)
+        } catch (ex: Exception) {
+            //todo: adicionar tratamento
+        }
     }
 }

@@ -7,7 +7,7 @@ import br.com.cwi.marvelapp.domain.model.CharacterItem
 import br.com.cwi.marvelapp.domain.repository.CharacterRepository
 import br.com.cwi.marvelapp.presentation.base.BaseViewModel
 
-private const val TOTAL_ITEMS_PER_PAGE = 20
+private const val TOTAL_ITEMS_PER_PAGE = 10
 private const val FIRST_PAGE = 0
 private const val MIN_SIZE_SEARCH = 4
 
