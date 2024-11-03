@@ -11,7 +11,8 @@
 
 - Listagem de personagens, com lista infinita, barra de buscas, pull-to-refresh e seleção de tipo da listagem.
 - Listagem de detalhes do personagem, junto com seus Comics e Series.
-- Armazenamento local e gerenciamento de personagens favoritos
+- Armazenamento local e gerenciamento de personagens favoritos.
+- Tratamento de erros.
 
 ## Features Tecnicas
 - Armazenamento de dados locais usando `Room`.
@@ -20,7 +21,7 @@
 - Uso de boas práticas do Architecture Components do Android em geral.
 - Implementação de injeção de dependências usando `Koin`.
 - Código escrito buscando manter as melhores práticas de Clean Code.
-- Cobertura de teste unitário nas View Models e Repositorios, usando `Mockk`.
+- Cobertura de teste unitário nas View Models e Repositorios, usando `Mockk` e `JUnit`.
 
 
 ## Arquitetura e Padrões de projeto
